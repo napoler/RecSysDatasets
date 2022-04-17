@@ -49,7 +49,15 @@ class ML100KDataset(BaseDataset):
         return pd.read_csv(self.inter_file, delimiter=self.inter_sep, header=None, engine='python')
 
     def load_item_data(self):
-        origin_data = pd.read_csv(self.item_file, delimiter=self.item_sep, header=None, engine='python')
+        """
+        https://stackoverflow.com/questions/19699367/for-line-in-results-in-unicodedecodeerror-utf-8-codec-cant-decode-byte
+
+        :return:
+        """
+        # 这里制定编码
+        # origin_data = pd.read_csv(self.item_file, delimiter=self.item_sep, header=None, engine='python')
+        origin_data = pd.read_csv(self.item_file, delimiter=self.item_sep, header=None, engine='python',
+                                  encoding='latin-1')
         processed_data = origin_data.iloc[:, 0:4]
         release_year = []
         all_type = ['unkown', 'Action', 'Adventure', 'Animation',
